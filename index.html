@@ -1,1 +1,110 @@
-index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Email Function - Help Guide 📩</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #007bff;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .emoji {
+            font-size: 1.2em;
+        }
+        .param {
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>📩 Send Email Function - Help Guide</h1>
+
+    <p>This function allows you to send emails with an HTML signature using **Google Apps Script (GAS)**. It supports **CC, BCC, attachments**, and **dynamic personal details**. 🚀</p>
+
+    <h2>📜 Function Overview</h2>
+    <p>The function signature is:</p>
+    <pre><code>sendEmail(recipient, subject, body, cc, bcc, attachments, phone, name, duty, company, email)</code></pre>
+
+    <h2>📌 Parameters</h2>
+    <ul>
+        <li><span class="param">recipient</span> 📧 - The primary email address of the recipient.</li>
+        <li><span class="param">subject</span> 📝 - The subject of the email.</li>
+        <li><span class="param">body</span> ✉️ - The main content of the email (plain text version).</li>
+        <li><span class="param">cc</span> 👥 - Carbon Copy (CC) recipients (optional).</li>
+        <li><span class="param">bcc</span> 🔒 - Blind Carbon Copy (BCC) recipients (optional).</li>
+        <li><span class="param">attachments</span> 📎 - Array of files to attach (optional).</li>
+        <li><span class="param">phone</span> 📞 - Sender's contact number.</li>
+        <li><span class="param">name</span> 👨‍✈️ - Sender's full name.</li>
+        <li><span class="param">duty</span> ⚓ - Sender's role (e.g., "Nautical Superintendent").</li>
+        <li><span class="param">company</span> 🏢 - Sender's company name.</li>
+        <li><span class="param">email</span> 📬 - Sender's email address.</li>
+    </ul>
+
+    <h2>🛠️ Example Usage</h2>
+    <p>Use the function inside Google Apps Script:</p>
+    <pre><code>
+function testSendEmail() {
+    var recipient = "example@example.com";
+    var subject = "Test Email with Signature";
+    var body = "Hello, this is a test email.";
+    var cc = "cc@example.com";
+    var bcc = "bcc@example.com";
+    var attachments = [DriveApp.getFileById("FILE_ID").getAs(MimeType.PDF)];
+
+    var phone = "+7-900-1213053";
+    var name = "Cpt. Oleg Falaleev";
+    var duty = "Nautical Superintendent";
+    var company = "BD-Shipsnavo GmbH & Co. Reederei KG";
+    var email = "oleg.falaleev@shipsnavo.de";
+
+    sendEmail(recipient, subject, body, cc, bcc, attachments, phone, name, duty, company, email);
+}
+    </code></pre>
+
+    <h2>📨 Email Signature</h2>
+    <p>The function automatically includes this **HTML signature** at the end of each email:</p>
+    <ul>
+        <li>🧑‍✈️ Sender's name & duty</li>
+        <li>🏢 Company details</li>
+        <li>📞 Contact information</li>
+        <li>📧 Sender's email</li>
+        <li>🌍 Website link</li>
+        <li>⚠️ Confidentiality notice</li>
+        <li>🖼️ Three images as part of the signature</li>
+    </ul>
+
+    <h2>✅ Features</h2>
+    <ul>
+        <li>📧 Supports **HTML email format**.</li>
+        <li>📎 Allows **attachments**.</li>
+        <li>👥 Includes **CC & BCC recipients**.</li>
+        <li>🔄 Uses **dynamic parameters** for customization.</li>
+        <li>🎨 Automatically appends a **professional email signature**.</li>
+    </ul>
+
+    <h2>⚠️ Notes</h2>
+    <ul>
+        <li>Ensure that Google Apps Script has the necessary **permissions** to send emails.</li>
+        <li>The email signature **must be in HTML format** for proper rendering.</li>
+        <li>Attachments must be retrieved using `DriveApp.getFileById("FILE_ID")`.</li>
+    </ul>
+
+    <h2>📞 Need Help?</h2>
+    <p>If you have any questions, feel free to contact **${name}** at <a href="mailto:${email}">${email}</a> 📩</p>
+
+</body>
+</html>
