@@ -19,6 +19,8 @@
             background: #f4f4f4;
             padding: 2px 6px;
             border-radius: 4px;
+            display: block;
+            white-space: pre-wrap;
         }
         .emoji {
             font-size: 1.2em;
@@ -37,7 +39,7 @@
 
     <h2>📜 Function Overview</h2>
     <p>The function signature is:</p>
-    <pre><code>sendEmail(recipient, subject, body, cc, bcc, attachments, phone, name, duty, company, email)</code></pre>
+    <code>sendEmail(recipient, subject, body, cc, bcc, attachments, phone, name, duty, company, email)</code>
 
     <h2>📌 Parameters</h2>
     <ul>
@@ -56,7 +58,7 @@
 
     <h2>🛠️ Example Usage</h2>
     <p>Use the function inside Google Apps Script:</p>
-    <pre><code>
+    <code>
 function testSendEmail() {
     var recipient = "example@example.com";
     var subject = "Test Email with Signature";
@@ -73,7 +75,7 @@ function testSendEmail() {
 
     sendEmail(recipient, subject, body, cc, bcc, attachments, phone, name, duty, company, email);
 }
-    </code></pre>
+    </code>
 
     <h2>📨 Email Signature</h2>
     <p>The function automatically includes this **HTML signature** at the end of each email:</p>
@@ -87,24 +89,52 @@ function testSendEmail() {
         <li>🖼️ Three images as part of the signature</li>
     </ul>
 
-    <h2>✅ Features</h2>
-    <ul>
-        <li>📧 Supports **HTML email format**.</li>
-        <li>📎 Allows **attachments**.</li>
-        <li>👥 Includes **CC & BCC recipients**.</li>
-        <li>🔄 Uses **dynamic parameters** for customization.</li>
-        <li>🎨 Automatically appends a **professional email signature**.</li>
-    </ul>
+    <h2>📜 Full JavaScript Code</h2>
+    <code>
+function sendEmail(recipient, subject, body, cc, bcc, attachments, phone, name, duty, company, email) {
+    var signature = `
+        &lt;div dir="ltr" class="gmail_signature" data-smartmail="gmail_signature"&gt;
+            &lt;div dir="ltr"&gt;
+                &lt;div&gt;If you have further questions, do not hesitate to contact me.&lt;/div&gt;
+                &lt;div&gt;&amp;nbsp;&lt;/div&gt;
+                &lt;div&gt;tkx, krgds&lt;/div&gt;
+                &lt;div&gt;&lt;b&gt;${name}&lt;/b&gt;&lt;/div&gt;
+                &lt;div&gt;${duty}&lt;/div&gt; 
+                &lt;div&gt;++++&lt;/div&gt;
+                &lt;div&gt;&lt;img src="https://ci3.googleusercontent.com/mail-sig/AIorK4zHOubpwHZAnLlKvuKTKeOqhTM_rrD8LHOL4YDl_3ylf5kFFBvBctxuJiMIRbxXLbR3FDLzDDoj0TBl" alt="Signature Image 1"&gt;&lt;/div&gt;
+                &lt;div&gt;&lt;img src="https://ci3.googleusercontent.com/mail-sig/AIorK4x9FiC0E__4uDwtQazPtvCJtivV8PWCZQg_i7sqZ4BJtKHelOJ8KkQ09NZnhPnKc_baigJBJBP2keJi" width="80" height="64" alt="Signature Image 2"&gt;&lt;/div&gt;
+                &lt;div&gt;${company}&lt;/div&gt;
+                &lt;div&gt;Ph: ${phone}&lt;/div&gt;
+                &lt;div&gt;Email: &lt;a href="mailto:${email}"&gt;${email}&lt;/a&gt;&lt;/div&gt;
+                &lt;div&gt;&lt;a href="http://www.shipsnavo.de" target="_blank"&gt;www.shipsnavo.de&lt;/a&gt;&lt;/div&gt;
+                &lt;div&gt;&lt;img src="https://ci3.googleusercontent.com/mail-sig/AIorK4zQwMgynpd2HJ8VdoVDz2dJMmcKCqxhUZN5LrAtvObhe14j_NhabEICJPdHonKpXjpuVSZZaYR7FfH-" width="92" height="32" alt="Signature Image 3"&gt;&lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    `;
 
-    <h2>⚠️ Notes</h2>
-    <ul>
-        <li>Ensure that Google Apps Script has the necessary **permissions** to send emails.</li>
-        <li>The email signature **must be in HTML format** for proper rendering.</li>
-        <li>Attachments must be retrieved using `DriveApp.getFileById("FILE_ID")`.</li>
-    </ul>
+    var htmlBody = body + "&lt;br&gt;&lt;br&gt;" + signature;
+
+    var options = {
+        cc: cc || "",
+        bcc: bcc || "",
+        attachments: attachments || [],
+        htmlBody: htmlBody
+    };
+
+    MailApp.sendEmail({
+        to: recipient,
+        subject: subject,
+        body: body,
+        htmlBody: htmlBody,
+        cc: options.cc,
+        bcc: options.bcc,
+        attachments: options.attachments
+    });
+}
+    </code>
 
     <h2>📞 Need Help?</h2>
-    <p>If you have any questions, feel free to contact **${name}** at <a href="mailto:${email}">${email}</a> 📩</p>
+    <p>For assistance, contact **${name}** at <a href="mailto:${email}">${email}</a> 📩</p>
 
 </body>
 </html>
