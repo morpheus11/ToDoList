@@ -3,110 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email Sending Function Documentation</title>
+    <title>sendEmail Function Documentation</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            line-height: 1.6;
             margin: 20px;
-        }
-        h1 {
-            color: #333;
-        }
-        code {
-            background-color: #f4f4f4;
-            padding: 5px;
-            border-radius: 5px;
+            padding: 20px;
+            background-color: #f9f9f9;
         }
         .container {
-            max-width: 800px;
-            margin: auto;
+            max-width: 900px;
+            background: #fff;
             padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            background-color: #fafafa;
-            overflow-x: auto;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            overflow-wrap: break-word;
         }
         pre {
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            background-color: #f4f4f4;
+            background: #f4f4f4;
             padding: 10px;
             border-radius: 5px;
             overflow-x: auto;
-            max-width: 100%;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li::before {
+            content: "✅ ";
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>📧 Email Sending Function Documentation</h1>
-        <p>The <code>sendEmail</code> function automates the process of sending emails with optional CC, BCC, attachments, and a formatted signature.</p>
-
-        <h2>📌 Function Overview</h2>
-        <p><strong>Function Name:</strong> <code>sendEmail</code></p>
-        <p><strong>Purpose:</strong> Sends an email using <code>MailApp.sendEmail</code> in Google Apps Script.</p>
+        <h1>sendEmail Function Documentation</h1>
+        <p>This function is used to send emails with HTML formatting, including greetings, signatures, attachments, and optional CC/BCC recipients.</p>
         
-        <h2>📌 Main Function</h2>
-        <pre>
-function sendEmail(
-    recipient, paramNameOfRecepient, subject, body, cc, bcc, attachments,
-    phone, nameOfSender, duty, company, email, replyTo, msgFrom
-) {
-    var greeting = `Dear ${paramNameOfRecepient},<br>Good day<br><br>`; 
-    var signature = `
-        <div dir="ltr" class="gmail_signature" data-smartmail="gmail_signature">
-            <div>If you have further questions, do not hesitate to contact me.</div>
-            <div>tkx, krgds</div>
-            <div><b>${nameOfSender}</b></div>
-            <div>${duty}</div>
-            <div>${company}</div>
-            <div>📞 ${phone}</div>
-            <div>📧 <a href="mailto:${email}">${email}</a></div>
-        </div>
-    `;
-    body = String(body);
-    var htmlBody = greeting + body + "<br><br>" + signature;
-
-    MailApp.sendEmail({
-        to: recipient,
-        subject: subject,
-        body: body, 
-        htmlBody: htmlBody, 
-        cc: cc || "",
-        bcc: bcc || "",
-        attachments: attachments || [],
-        replyTo: replyTo || "",
-        name: msgFrom || ""
-    });
-}
-        </pre>
-
-        <h2>🔍 Example Usage</h2>
-        <pre>
-function testSendEmail() {
-    let sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-    let body = sheet.getRange("A1").getValue();
-    var recipient = "claimmoscow@gmail.com";
-    var paramNameOfRecepient = "Mr. Ivanov";
-    var subject = "Test Email";
-    var attachments = [DriveApp.getFileById("1MF0y0...").getAs(MimeType.PDF)];
-    
-    sendEmail(
-        recipient, paramNameOfRecepient, subject, body, "", "", attachments,
-        "+7-900-1213053", "John Doe", "Some Duty", "BD-Shipsnavo", 
-        "oleg.falaleev@shipsnavo.de", "office@shipsnavo.de", "John Doe"
-    );
-}
-        </pre>
-
-        <h2>✅ Key Features</h2>
+        <h2>Parameters 📌</h2>
         <ul>
-            <li>💌 Supports both plain text and HTML email formats.</li>
-            <li>📎 Allows file attachments from Google Drive.</li>
-            <li>📤 Supports CC, BCC, and reply-to fields.</li>
-            <li>📜 Automatically formats long text in the body.</li>
-            <li>🔗 Includes company signature with contact details and legal disclaimers.</li>
+            <li><b>recipient</b> - The email address of the recipient.</li>
+            <li><b>paramNameOfRecepient</b> - The name of the recipient included in the greeting.</li>
+            <li><b>subject</b> - The subject line of the email.</li>
+            <li><b>body</b> - The main content of the email.</li>
+            <li><b>cc</b> - (Optional) CC recipients.</li>
+            <li><b>bcc</b> - (Optional) BCC recipients.</li>
+            <li><b>attachments</b> - An array of file attachments.</li>
+            <li><b>phone</b> - The sender's phone number.</li>
+            <li><b>nameOfSender</b> - The sender's name.</li>
+            <li><b>duty</b> - The sender’s duty or role.</li>
+            <li><b>company</b> - The sender’s company.</li>
+            <li><b>email</b> - The sender’s email address.</li>
+            <li><b>replyTo</b> - The email address for replies.</li>
+            <li><b>msgFrom</b> - The name displayed in the sender field.</li>
+        </ul>
+
+        <h2>Function Code 📜</h2>
+        <pre>
+function sendEmail(recipient, paramNameOfRecepient, subject, body, cc, bcc, attachments, phone, nameOfSender, duty, company, email, replyTo, msgFrom) {
+    var greeting = `Dear ${paramNameOfRecepient},<br>Good day<br><br>`;
+    var signature = `...`; // Signature HTML content
+    body = String(body);
+    var htmlBody = greeting + formatTextByLength(body, 70) + "<br><br>" + signature;
+    var options = { cc, bcc, attachments, htmlBody, replyTo, name: msgFrom };
+    MailApp.sendEmail({ to: recipient, subject, body, htmlBody, ...options });
+}
+        </pre>
+
+        <h2>Example Usage 💡</h2>
+        <pre>
+let body = "Hello, this is a test email.";
+sendEmail(
+    "test@example.com", "Mr. Smith", "Test Email", body, "", "", [], "+1-234-567890", 
+    "John Doe", "Manager", "ABC Corp", "john.doe@example.com", "reply@example.com", "John Doe"
+);
+        </pre>
+
+        <h2>Key Features ✨</h2>
+        <ul>
+            <li>Supports both plain text and HTML emails.</li>
+            <li>Includes a customizable greeting and signature.</li>
+            <li>Allows CC, BCC, and attachments.</li>
+            <li>Supports setting a custom Reply-To address.</li>
+            <li>Flexible sender name configuration.</li>
         </ul>
     </div>
 </body>
