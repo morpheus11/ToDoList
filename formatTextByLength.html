@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help File: formatTextByLength Function</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; }
+        h1, h2 { color: #2c3e50; }
+        code { background: #f4f4f4; padding: 2px 5px; border-radius: 5px; }
+        .section { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <h1>📌 Help File: formatTextByLength Function</h1>
+    
+    <div class="section">
+        <h2>🔍 Overview</h2>
+        <p>The <code>formatTextByLength</code> function takes a text string and formats it into an HTML paragraph with line breaks. It ensures that each line does not exceed a specified length while breaking lines at appropriate punctuation (such as commas and periods).</p>
+    </div>
+    
+    <div class="section">
+        <h2>📌 Parameters</h2>
+        <ul>
+            <li><strong>text</strong> (📜 String) – The input text to be formatted.</li>
+            <li><strong>maxLength</strong> (🔢 Number) – The maximum number of characters allowed per line.</li>
+        </ul>
+    </div>
+    
+    <div class="section">
+        <h2>✨ Features</h2>
+        <ul>
+            <li>🚀 Automatically formats long text into readable lines.</li>
+            <li>✍️ Breaks lines at logical punctuation (commas, periods) when possible.</li>
+            <li>🔒 Escapes special HTML characters to ensure proper rendering.</li>
+            <li>📜 Returns a formatted HTML string wrapped in a paragraph (&lt;p&gt;...&lt;/p&gt;).</li>
+        </ul>
+    </div>
+    
+    <div class="section">
+        <h2>📖 Example Usage</h2>
+        <pre>
+function testFormatTextByLength() {
+    let sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    let text = sheet.getRange("A1").getValue();
+    let maxLength = 50; // Adjust as needed
+    let formattedText = formatTextByLength(text, maxLength);
+    sheet.getRange("B1").setValue(formattedText);
+}
+        </pre>
+    </div>
+    
+    <div class="section">
+        <h2>🛠️ Function Definition</h2>
+        <pre>
+function formatTextByLength(text, maxLength) {
+    let formattedText = "<p>";
+    let words = text.match(/[\w’'-]+|[.,!?;]/g) || [];
+    let currentLine = "";
+    
+    for (let word of words) {
+        if ((currentLine + " " + word).trim().length > maxLength) {
+            let lastComma = currentLine.lastIndexOf(",");
+            let lastPeriod = currentLine.lastIndexOf(".");
+            let breakIndex = Math.max(lastComma, lastPeriod);
+    
+            if (breakIndex !== -1) {
+                formattedText += escapeHtml(currentLine.substring(0, breakIndex + 1).trim()) + "<br>";
+                currentLine = currentLine.substring(breakIndex + 1).trim() + " " + word;
+            } else {
+                formattedText += escapeHtml(currentLine.trim()) + "<br>";
+                currentLine = word;
+            }
+        } else {
+            currentLine += (currentLine.length === 0 ? "" : " ") + word;
+        }
+    }
+    
+    if (currentLine.length > 0) {
+        formattedText += escapeHtml(currentLine.trim());
+    }
+    
+    formattedText += "</p>";
+    return formattedText;
+}
+        </pre>
+    </div>
+    
+    <div class="section">
+        <h2>🔑 Notes</h2>
+        <ul>
+            <li>⚠️ This function is designed to work in Google Apps Script for Google Sheets.</li>
+            <li>🔄 Ensure that cell <code>A1</code> contains text before running the script.</li>
+            <li>📝 You can modify <code>maxLength</code> as per your formatting needs.</li>
+        </ul>
+    </div>
+</body>
+</html>
