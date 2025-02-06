@@ -25,6 +25,16 @@
             border: 1px solid #ccc;
             border-radius: 10px;
             background-color: #fafafa;
+            overflow-x: auto;
+        }
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            max-width: 100%;
         }
     </style>
 </head>
@@ -37,55 +47,32 @@
         <p><strong>Function Name:</strong> <code>sendEmail</code></p>
         <p><strong>Purpose:</strong> Sends an email using <code>MailApp.sendEmail</code> in Google Apps Script.</p>
         
-        <h2>🛠️ Parameters</h2>
-        <ul>
-            <li>📩 <strong>recipient (string):</strong> The email address of the recipient.</li>
-            <li>👤 <strong>paramNameOfRecepient (string):</strong> Name of the recipient for personalization.</li>
-            <li>📌 <strong>subject (string):</strong> Subject of the email.</li>
-            <li>📝 <strong>body (string):</strong> The main content of the email.</li>
-            <li>📤 <strong>cc (string, optional):</strong> Comma-separated list of CC recipients.</li>
-            <li>🙈 <strong>bcc (string, optional):</strong> Comma-separated list of BCC recipients.</li>
-            <li>📎 <strong>attachments (array, optional):</strong> List of files to attach, retrieved using Google Drive API.</li>
-            <li>📞 <strong>phone (string):</strong> Sender's phone number.</li>
-            <li>🧑‍💼 <strong>nameOfSender (string):</strong> Sender's name.</li>
-            <li>⚓ <strong>duty (string):</strong> Sender's role in the company.</li>
-            <li>🏢 <strong>company (string):</strong> Sender's company name.</li>
-            <li>📧 <strong>email (string):</strong> Sender's email address.</li>
-            <li>🔄 <strong>replyTo (string, optional):</strong> The email address to which replies should be sent.</li>
-            <li>✉️ <strong>msgFrom (string, optional):</strong> Custom sender name displayed to the recipient.</li>
-        </ul>
-
-        <h2>💡 Functionality</h2>
-        <p>The function creates a personalized greeting and appends a pre-defined HTML signature to the email body. The email is then sent using <code>MailApp.sendEmail</code> with both plain text and HTML versions.</p>
-
         <h2>📌 Main Function</h2>
         <pre>
-function sendEmail(recipient, paramNameOfRecepient, subject, body, cc, bcc, attachments, phone, nameOfSender, duty, company, email, replyTo, msgFrom) {
-    var greeting = `Dear ${paramNameOfRecepient},<br>Good day<br><br>`; // Static greeting
-
+function sendEmail(
+    recipient, paramNameOfRecepient, subject, body, cc, bcc, attachments,
+    phone, nameOfSender, duty, company, email, replyTo, msgFrom
+) {
+    var greeting = `Dear ${paramNameOfRecepient},<br>Good day<br><br>`; 
     var signature = `
         <div dir="ltr" class="gmail_signature" data-smartmail="gmail_signature">
-            <div dir="ltr">
-                <div>If you have further questions, do not hesitate to contact me.</div>
-                <div>&nbsp;</div>
-                <div>tkx, krgds</div>
-                <div><b>${nameOfSender}</b></div>
-                <div>${duty}</div>
-                <div>${company}</div>
-                <div>📞 ${phone}</div>
-                <div>📧 <a href="mailto:${email}">${email}</a></div>
-            </div>
+            <div>If you have further questions, do not hesitate to contact me.</div>
+            <div>tkx, krgds</div>
+            <div><b>${nameOfSender}</b></div>
+            <div>${duty}</div>
+            <div>${company}</div>
+            <div>📞 ${phone}</div>
+            <div>📧 <a href="mailto:${email}">${email}</a></div>
         </div>
     `;
-
     body = String(body);
     var htmlBody = greeting + body + "<br><br>" + signature;
 
     MailApp.sendEmail({
         to: recipient,
         subject: subject,
-        body: body, // Plain text version
-        htmlBody: htmlBody, // HTML version with greeting and signature
+        body: body, 
+        htmlBody: htmlBody, 
         cc: cc || "",
         bcc: bcc || "",
         attachments: attachments || [],
@@ -105,9 +92,11 @@ function testSendEmail() {
     var subject = "Test Email";
     var attachments = [DriveApp.getFileById("1MF0y0...").getAs(MimeType.PDF)];
     
-    sendEmail(recipient, paramNameOfRecepient, subject, body, "", "", attachments,
-              "+7-900-1213053", "John Doe", "Some Duty", "BD-Shipsnavo", 
-              "oleg.falaleev@shipsnavo.de", "office@shipsnavo.de", "John Doe");
+    sendEmail(
+        recipient, paramNameOfRecepient, subject, body, "", "", attachments,
+        "+7-900-1213053", "John Doe", "Some Duty", "BD-Shipsnavo", 
+        "oleg.falaleev@shipsnavo.de", "office@shipsnavo.de", "John Doe"
+    );
 }
         </pre>
 
