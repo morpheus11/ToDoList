@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Sending Function Documentation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #fafafa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📧 Email Sending Function Documentation</h1>
+        <p>The <code>sendEmail</code> function automates the process of sending emails with optional CC, BCC, attachments, and a formatted signature.</p>
+
+        <h2>📌 Function Overview</h2>
+        <p><strong>Function Name:</strong> <code>sendEmail</code></p>
+        <p><strong>Purpose:</strong> Sends an email using <code>MailApp.sendEmail</code> in Google Apps Script.</p>
+        
+        <h2>🛠️ Parameters</h2>
+        <ul>
+            <li>📩 <strong>recipient (string):</strong> The email address of the recipient.</li>
+            <li>👤 <strong>paramNameOfRecepient (string):</strong> Name of the recipient for personalization.</li>
+            <li>📌 <strong>subject (string):</strong> Subject of the email.</li>
+            <li>📝 <strong>body (string):</strong> The main content of the email.</li>
+            <li>📤 <strong>cc (string, optional):</strong> Comma-separated list of CC recipients.</li>
+            <li>🙈 <strong>bcc (string, optional):</strong> Comma-separated list of BCC recipients.</li>
+            <li>📎 <strong>attachments (array, optional):</strong> List of files to attach, retrieved using Google Drive API.</li>
+            <li>📞 <strong>phone (string):</strong> Sender's phone number.</li>
+            <li>🧑‍💼 <strong>nameOfSender (string):</strong> Sender's name.</li>
+            <li>⚓ <strong>duty (string):</strong> Sender's role in the company.</li>
+            <li>🏢 <strong>company (string):</strong> Sender's company name.</li>
+            <li>📧 <strong>email (string):</strong> Sender's email address.</li>
+            <li>🔄 <strong>replyTo (string, optional):</strong> The email address to which replies should be sent.</li>
+            <li>✉️ <strong>msgFrom (string, optional):</strong> Custom sender name displayed to the recipient.</li>
+        </ul>
+
+        <h2>💡 Functionality</h2>
+        <p>The function creates a personalized greeting and appends a pre-defined HTML signature to the email body. The email is then sent using <code>MailApp.sendEmail</code> with both plain text and HTML versions.</p>
+
+        <h2>🔍 Example Usage</h2>
+        <pre>
+function testSendEmail() {
+    let sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    let body = sheet.getRange("A1").getValue(); // Fetch content from A1
+    var recipient = "claimmoscow@gmail.com";
+    var paramNameOfRecepient = "Mr. Ivanov";
+    var subject = "Test Email";
+    var attachments = [DriveApp.getFileById("1MF0y0...").getAs(MimeType.PDF)];
+    
+    sendEmail(recipient, paramNameOfRecepient, subject, body, "", "", attachments,
+              "+7-900-1213053", "John Doe", "Some Duty", "BD-Shipsnavo", 
+              "oleg.falaleev@shipsnavo.de", "office@shipsnavo.de", "John Doe");
+}
+        </pre>
+
+        <h2>✅ Key Features</h2>
+        <ul>
+            <li>💌 Supports both plain text and HTML email formats.</li>
+            <li>📎 Allows file attachments from Google Drive.</li>
+            <li>📤 Supports CC, BCC, and reply-to fields.</li>
+            <li>📜 Automatically formats long text in the body.</li>
+            <li>🔗 Includes company signature with contact details and legal disclaimers.</li>
+        </ul>
+    </div>
+</body>
+</html>
