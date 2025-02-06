@@ -41,20 +41,20 @@
         
         <h2>Parameters 📌</h2>
         <ul>
-            <li><b>recipient</b> - The email address of the recipient.</li>
-            <li><b>paramNameOfRecepient</b> - The name of the recipient included in the greeting.</li>
-            <li><b>subject</b> - The subject line of the email.</li>
-            <li><b>body</b> - The main content of the email.</li>
-            <li><b>cc</b> - (Optional) CC recipients.</li>
-            <li><b>bcc</b> - (Optional) BCC recipients.</li>
-            <li><b>attachments</b> - An array of file attachments.</li>
-            <li><b>phone</b> - The sender's phone number.</li>
-            <li><b>nameOfSender</b> - The sender's name.</li>
-            <li><b>duty</b> - The sender’s duty or role.</li>
-            <li><b>company</b> - The sender’s company.</li>
-            <li><b>email</b> - The sender’s email address.</li>
-            <li><b>replyTo</b> - The email address for replies.</li>
-            <li><b>msgFrom</b> - The name displayed in the sender field.</li>
+            <li><b>📩 recipient</b> - The email address of the recipient.</li>
+            <li><b>👤 paramNameOfRecepient</b> - The name of the recipient included in the greeting.</li>
+            <li><b>✉️ subject</b> - The subject line of the email.</li>
+            <li><b>📝 body</b> - The main content of the email.</li>
+            <li><b>📥 cc</b> - (Optional) CC recipients.</li>
+            <li><b>📥 bcc</b> - (Optional) BCC recipients.</li>
+            <li><b>📎 attachments</b> - An array of file attachments.</li>
+            <li><b>📞 phone</b> - The sender's phone number.</li>
+            <li><b>✍️ nameOfSender</b> - The sender's name.</li>
+            <li><b>💼 duty</b> - The sender’s duty or role.</li>
+            <li><b>🏢 company</b> - The sender’s company.</li>
+            <li><b>📧 email</b> - The sender’s email address.</li>
+            <li><b>↩️ replyTo</b> - The email address for replies.</li>
+            <li><b>🆔 msgFrom</b> - The name displayed in the sender field.</li>
         </ul>
 
         <h2>Function Code 📜</h2>
@@ -80,11 +80,102 @@ sendEmail(
 
         <h2>Key Features ✨</h2>
         <ul>
-            <li>Supports both plain text and HTML emails.</li>
-            <li>Includes a customizable greeting and signature.</li>
-            <li>Allows CC, BCC, and attachments.</li>
-            <li>Supports setting a custom Reply-To address.</li>
-            <li>Flexible sender name configuration.</li>
+            <li>📜 Supports both plain text and HTML emails.</li>
+            <li>🖊️ Includes a customizable greeting and signature.</li>
+            <li>📎 Allows CC, BCC, and attachments.</li>
+            <li>📩 Supports setting a custom Reply-To address.</li>
+            <li>🔧 Flexible sender name configuration.</li>
+        </ul>
+    </div>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sendEmail Function Documentation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 900px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            overflow-wrap: break-word;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li::before {
+            content: "✅ ";
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>sendEmail Function Documentation</h1>
+        <p>This function is used to send emails with HTML formatting, including greetings, signatures, attachments, and optional CC/BCC recipients.</p>
+        
+        <h2>Parameters 📌</h2>
+        <ul>
+            <li><b>📩 recipient</b> - The email address of the recipient.</li>
+            <li><b>👤 paramNameOfRecepient</b> - The name of the recipient included in the greeting.</li>
+            <li><b>✉️ subject</b> - The subject line of the email.</li>
+            <li><b>📝 body</b> - The main content of the email.</li>
+            <li><b>📥 cc</b> - (Optional) CC recipients.</li>
+            <li><b>📥 bcc</b> - (Optional) BCC recipients.</li>
+            <li><b>📎 attachments</b> - An array of file attachments.</li>
+            <li><b>📞 phone</b> - The sender's phone number.</li>
+            <li><b>✍️ nameOfSender</b> - The sender's name.</li>
+            <li><b>💼 duty</b> - The sender’s duty or role.</li>
+            <li><b>🏢 company</b> - The sender’s company.</li>
+            <li><b>📧 email</b> - The sender’s email address.</li>
+            <li><b>↩️ replyTo</b> - The email address for replies.</li>
+            <li><b>🆔 msgFrom</b> - The name displayed in the sender field.</li>
+        </ul>
+
+        <h2>Function Code 📜</h2>
+        <pre>
+function sendEmail(recipient, paramNameOfRecepient, subject, body, cc, bcc, attachments, phone, nameOfSender, duty, company, email, replyTo, msgFrom) {
+    var greeting = `Dear ${paramNameOfRecepient},<br>Good day<br><br>`;
+    var signature = `...`; // Signature HTML content
+    body = String(body);
+    var htmlBody = greeting + formatTextByLength(body, 70) + "<br><br>" + signature;
+    var options = { cc, bcc, attachments, htmlBody, replyTo, name: msgFrom };
+    MailApp.sendEmail({ to: recipient, subject, body, htmlBody, ...options });
+}
+        </pre>
+
+        <h2>Example Usage 💡</h2>
+        <pre>
+let body = "Hello, this is a test email.";
+sendEmail(
+    "test@example.com", "Mr. Smith", "Test Email", body, "", "", [], "+1-234-567890", 
+    "John Doe", "Manager", "ABC Corp", "john.doe@example.com", "reply@example.com", "John Doe"
+);
+        </pre>
+
+        <h2>Key Features ✨</h2>
+        <ul>
+            <li>📜 Supports both plain text and HTML emails.</li>
+            <li>🖊️ Includes a customizable greeting and signature.</li>
+            <li>📎 Allows CC, BCC, and attachments.</li>
+            <li>📩 Supports setting a custom Reply-To address.</li>
+            <li>🔧 Flexible sender name configuration.</li>
         </ul>
     </div>
 </body>
