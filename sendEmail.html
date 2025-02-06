@@ -58,11 +58,48 @@
         <h2>💡 Functionality</h2>
         <p>The function creates a personalized greeting and appends a pre-defined HTML signature to the email body. The email is then sent using <code>MailApp.sendEmail</code> with both plain text and HTML versions.</p>
 
+        <h2>📌 Main Function</h2>
+        <pre>
+function sendEmail(recipient, paramNameOfRecepient, subject, body, cc, bcc, attachments, phone, nameOfSender, duty, company, email, replyTo, msgFrom) {
+    var greeting = `Dear ${paramNameOfRecepient},<br>Good day<br><br>`; // Static greeting
+
+    var signature = `
+        <div dir="ltr" class="gmail_signature" data-smartmail="gmail_signature">
+            <div dir="ltr">
+                <div>If you have further questions, do not hesitate to contact me.</div>
+                <div>&nbsp;</div>
+                <div>tkx, krgds</div>
+                <div><b>${nameOfSender}</b></div>
+                <div>${duty}</div>
+                <div>${company}</div>
+                <div>📞 ${phone}</div>
+                <div>📧 <a href="mailto:${email}">${email}</a></div>
+            </div>
+        </div>
+    `;
+
+    body = String(body);
+    var htmlBody = greeting + body + "<br><br>" + signature;
+
+    MailApp.sendEmail({
+        to: recipient,
+        subject: subject,
+        body: body, // Plain text version
+        htmlBody: htmlBody, // HTML version with greeting and signature
+        cc: cc || "",
+        bcc: bcc || "",
+        attachments: attachments || [],
+        replyTo: replyTo || "",
+        name: msgFrom || ""
+    });
+}
+        </pre>
+
         <h2>🔍 Example Usage</h2>
         <pre>
 function testSendEmail() {
     let sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-    let body = sheet.getRange("A1").getValue(); // Fetch content from A1
+    let body = sheet.getRange("A1").getValue();
     var recipient = "claimmoscow@gmail.com";
     var paramNameOfRecepient = "Mr. Ivanov";
     var subject = "Test Email";
